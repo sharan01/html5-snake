@@ -1,7 +1,7 @@
 {
   "name": "snake",
   "description": "My elevator pitch goes here",
-  "launch_path": "http://sharan01.github.io/html5-snake/",
+  "launch_path": "/html5-snake/",
   "developer": {
     "name": "Your name or organization",
     "url": "http://your-homepage-here.org"
