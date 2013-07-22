@@ -2,6 +2,9 @@ var canvas = document.getElementsByTagName('canvas')[0];
 var context = canvas.getContext('2d');
 var pts = document.getElementById('points');
 
+var startButton = document.getElementById('start');
+var highscr = document.getElementById('highscore');
+highscr.innerHTML = localStorage.highscore;
 
 
 function snakepart(a,b){
@@ -14,8 +17,6 @@ function snakeclass(context,w,h) {
     this.ctx = context;
     this.width = w;
     this.height = h;
-    this.direction ='l'; // intial snake direction
-    this.points = 0;
 
     //colors
     this.colorWhite = "#ffffff";
@@ -25,20 +26,24 @@ function snakeclass(context,w,h) {
     this.colorOrange = "orange";
     ////////////////////////////////
 
-
    
-    this.food = new snakepart(300,100); // intial food location
-    this.snake = [];
+   
+    
 
-    for(var i =0; i<5; i++){
-        this.snake.push(new snakepart(30+i*10,20));
-    }
+    
 
     //HELPER FUNCTIONS
     this.drawRect = function(x,y,w,h,color){
         this.ctx.fillStyle = color;
         this.ctx.fillRect(x,y,w,h);
     };
+    this.drawFood = function(x,y){
+        this.ctx.fillStyle = this.colorOrange;
+        this.ctx.arc(x+5,y+5,5,0,2*Math.PI);
+        
+        this.ctx.fill();
+        this.ctx.fillRect(x,y,2,2);
+    }
     this.getRandomInt = function(min, max) {
         return Math.round((Math.floor(Math.random() * (max - min + 1)) + min)/10) * 10;
     };
@@ -58,6 +63,7 @@ function snakeclass(context,w,h) {
             break;
         }
         this.drawRect(this.food.x,this.food.y,10,10,this.colorOrange);
+        //this.drawFood(this.food.x,this.food.y);
     };
     this.collision = function(){
         //collison with walls
@@ -78,7 +84,7 @@ function snakeclass(context,w,h) {
             this.putfood();
             this.points+=10;
              //speed up game
-             pts.innerHTML = this.points;
+             //pts.innerHTML = this.points;
              console.log(this.snake.length);
 
         }else{
@@ -114,11 +120,53 @@ function snakeclass(context,w,h) {
         this.drawRect(this.snake[0].x,this.snake[0].y,10,10,this.colorBlue);
     }; //end movesnake
 
+
+    this.initialize = function(){
+        startButton.style.display = 'none';
+        this.ctx.clearRect(0,0,this.width,this.height);
+        // //delete aftewards
+        // this.ctx.arc(205,105, 5,0,2*Math.PI);
+        // this.ctx.fill();
+        this.direction = 'l';
+        this.points = 0;
+
+       
+        this.snake = [];
+        for(var i =0; i<5; i++){
+            this.snake.push(new snakepart((this.width/2)+(10*i),(this.height/2)));
+        }
+        //draw snake
+        for (var j = 0; j < this.snake.length; j++) {
+            this.drawRect(this.snake[j].x,this.snake[j].y,10,10,this.colorBlue);
+        };
+
+        this.food = new snakepart(300,100); // create food object 
+        this.putfood();
+
+        //redraw edges
+        this.drawRect(0,0,this.width,10,this.colorBlack);
+        this.drawRect(0,this.height-10,this.width,10,this.colorBlack);
+        this.drawRect(0,10,10,this.height-20,this.colorBlack);
+        this.drawRect(this.width-10,10,10,this.height-20,this.colorBlack);
+    };
+
     this.start = function() {
+        this.initialize();
         var interval;
         var loop = function () {
             if(this.collision()){
                 console.log("game over");
+                startButton.style.display = 'block';
+
+
+                //local storage for high score
+                if(localStorage.highscore){
+                    localStorage.highscore = localStorage.highscore < this.points ? this.points : localStorage.highscore;
+                } else {
+                    localStorage.highscore = this.points;
+                }
+
+                
                 clearInterval(interval);
             }
             this.movesnake();
@@ -131,18 +179,16 @@ function snakeclass(context,w,h) {
 
 
 
-    //draw edges
+    
+
+    
+
+    
+     //draw edges
     this.drawRect(0,0,this.width,10,this.colorBlack);
     this.drawRect(0,this.height-10,this.width,10,this.colorBlack);
     this.drawRect(0,10,10,this.height-20,this.colorBlack);
     this.drawRect(this.width-10,10,10,this.height-20,this.colorBlack);
-
-    //draw snake
-    for (var j = 0; j < this.snake.length; j++) {
-        this.drawRect(this.snake[j].x,this.snake[j].y,10,10,this.colorBlue);
-    };
-
-    this.putfood();
 
 
 
@@ -153,7 +199,7 @@ function snakeclass(context,w,h) {
 
 
 s = new snakeclass(context,canvas.width,canvas.height);
-s.start();
+//s.start();
 
 
 //key events

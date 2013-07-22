@@ -5,16 +5,26 @@
 	<style type="text/css">
 	canvas{
 		border: 1px solid red;
-		margin:50px;
+		
+	}
+	#arena{
+		width:650px;
+		margin:auto;
 	}
 
 	</style>
 </head>
 <body>
-	
-	<canvas width="200" height="130"></canvas>
-	<p id="points"> </p>
+	<section id="arena">
+		<canvas width="640" height="320"></canvas>
+		<article>
+			<input id="start" type="button" value="start" onclick="s.start()" />
+			<span id="highscore"></span>
+
+		</article>
+	</section>
 	<script type="text/javascript" src="script.js"></script>
+
 </body>
 
 
