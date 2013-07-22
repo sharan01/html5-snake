@@ -1,10 +1,13 @@
 {
   "name": "snake",
-  "description": "My elevator pitch goes here",
+  "description": "classic snake game",
   "launch_path": "/html5-snake/",
+  "icons": {
+    "128": "/img/icon-128.png"
+  },
   "developer": {
-    "name": "Your name or organization",
-    "url": "http://your-homepage-here.org"
+    "name": "sharan",
+    "url": "http://github.com/sharan01"
   },
   "default_locale": "en"
 }
