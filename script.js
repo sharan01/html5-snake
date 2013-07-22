@@ -209,3 +209,8 @@ document.addEventListener('keydown', function(event) {
 
     }
 });
+// touch events
+
+Hammer(document.window).on("swipeleft", function() {
+    alert('you swiped left!');
+});
