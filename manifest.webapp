@@ -3,7 +3,7 @@
   "description": "classic snake game",
   "launch_path": "/html5-snake/",
   "icons": {
-    "128": "/img/icon-128.png"
+    "128": "/html5-snake/img/icon-128.png"
   },
   "developer": {
     "name": "sharan",
