@@ -211,6 +211,25 @@ document.addEventListener('keydown', function(event) {
 });
 // touch events
 
-Hammer(document.window).on("swipeleft", function() {
-    alert('you swiped left!');
+ $(function() {      
+      //Enable swiping...
+      $('body').swipe( {
+        //Generic swipe handler for all directions
+        swipe:function(event, direction, distance, duration, fingerCount) {
+          if(direction=='down'){
+            s.direction = s.direction === 'u' ? 'u' : 'd';
+          }
+          if(direction=='up'){
+            s.direction = s.direction === 'd' ? 'd' : 'u';
+          } 
+          if(direction=='left'){
+            s.direction = s.direction === 'r' ? 'r' : 'l';
+          }
+          if(direction=='right'){
+            s.direction = s.direction === 'l' ? 'l' : 'r';
+          }
+        },
+        //Default is 75px, set to 0 for demo so any distance triggers swipe
+         threshold:0
+      });
 });
